@@ -1,6 +1,8 @@
-import ExampleBusinessCard.BusinessCard;
-import ExampleBusinessCard.BusinessCardData;
+
+import BusinessCardDAO.DAO.BusinessCardDAO;
+import BusinessCardDAO.VO.BusinessCardVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,25 +12,25 @@ import java.util.List;
 
 public class JunitTest {
     // 테스트할 객체 선언
-    private BusinessCard businessCard1;
-    private BusinessCard businessCard2;
-    private BusinessCard businessCard3;
-    private List<BusinessCard> businessCardList;
-    private BusinessCardData businessCardData;
+    private BusinessCardVO businessCard1;
+    private BusinessCardVO businessCard2;
+    private BusinessCardVO businessCard3;
+    private List<BusinessCardVO> businessCardList;
+    private BusinessCardDAO businessCardData;
 
     @Before
     public void init(){
         businessCardList = new ArrayList<>();
-        businessCard1 = new BusinessCard("kim sungpark", "010-1111-2222", "sunnyvale");
-        businessCard2 = new BusinessCard("kang kyungmi", "010-1111-3333", "sunnyvale");
-        businessCard3 = new BusinessCard("choi sangjin", "010-1111-4444", "samsung");
+        businessCard1 = new BusinessCardVO(1,"kim sungpark", "010-1111-2222", "sunnyvale");
+        businessCard2 = new BusinessCardVO(2,"kang kyungmi", "010-1111-3333", "sunnyvale");
+        businessCard3 = new BusinessCardVO(3,"choi sangjin", "010-1111-4444", "samsung");
         businessCardList.add(businessCard1);
         businessCardList.add(businessCard2);
         businessCardList.add(businessCard3);
 
-        businessCardData = new BusinessCardData();
+        businessCardData = new BusinessCardDAO();
         businessCardData.setBusinessCardList(businessCardList);
-        businessCardData.setMaxNum(100);
+        businessCardData.setNum(100);
     }
     @Test
     public void convertJson() throws Exception{
@@ -55,6 +57,7 @@ public class JunitTest {
     public void saveBusinessCardData() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(".\\businesscard2.json");
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
         objectMapper.writeValue(file, businessCardData);
     }
 
@@ -62,7 +65,8 @@ public class JunitTest {
     public void readBusinessCardData() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(".\\businesscard2.json");
-        BusinessCardData businessCardData = objectMapper.readValue(file, BusinessCardData.class);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        BusinessCardDAO businessCardData = objectMapper.readValue(file, BusinessCardDAO.class);
 
         System.out.println(businessCardData);
     }

@@ -1,29 +1,33 @@
 package BusinessCardDAO.VO;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Created by cjswo9207u@gmail.com on 2018-12-17
  * Github : https://github.com/YeoHoonYun
  */
-public class BusinnessCardVO {
-    private int cardNum;
+@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"})
+public class BusinessCardVO {
+    private Integer cardNum;
     private String name;
     private String phonNum;
     private String company;
 
-    public BusinnessCardVO() {
+    public BusinessCardVO() {
     }
-    public BusinnessCardVO(int cardNum, String name, String phonNum, String company) {
-        //this.cardNum = cardNum;
+
+    public BusinessCardVO(Integer cardNum, String name, String phonNum, String company) {
+        this.cardNum = cardNum;
         this.name = name;
         this.phonNum = phonNum;
         this.company = company;
     }
 
-    public int getCardNum() {
+    public Integer getCardNum() {
         return cardNum;
     }
 
-    public void setCardNum(int cardNum) {
+    public void setCardNum(Integer cardNum) {
         this.cardNum = cardNum;
     }
 
@@ -53,7 +57,7 @@ public class BusinnessCardVO {
 
     @Override
     public String toString() {
-        return "BusinnessCardVO{" +
+        return "BusinessCardVO{" +
                 "cardNum=" + cardNum +
                 ", name='" + name + '\'' +
                 ", phonNum='" + phonNum + '\'' +

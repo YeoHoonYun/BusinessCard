@@ -1,5 +1,5 @@
 import BusinessCardDAO.DAO.BusinessCardDAO;
-import BusinessCardDAO.VO.BusinnessCardVO;
+import BusinessCardDAO.VO.BusinessCardVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,24 +10,24 @@ import java.util.List;
 
 public class JacksonTest {
     // 테스트할 객체 선언
-    private BusinnessCardVO businessCard1;
-    private BusinnessCardVO businessCard2;
-    private BusinnessCardVO businessCard3;
-    private List<BusinnessCardVO> businessCardList;
+    private BusinessCardVO businessCard1;
+    private BusinessCardVO businessCard2;
+    private BusinessCardVO businessCard3;
+    private List<BusinessCardVO> businessCardList;
     private BusinessCardDAO businessCardData;
 
     @Before
     public void init(){
         businessCardList = new ArrayList<>();
-        businessCard1 = new BusinnessCardVO(1,"kim sungpark", "010-1111-2222", "sunnyvale");
-        businessCard2 = new BusinnessCardVO(2,"kang kyungmi", "010-1111-3333", "sunnyvale");
-        businessCard3 = new BusinnessCardVO(3,"choi sangjin", "010-1111-4444", "samsung");
+        businessCard1 = new BusinessCardVO(1,"kim sungpark", "010-1111-2222", "sunnyvale");
+        businessCard2 = new BusinessCardVO(2,"kang kyungmi", "010-1111-3333", "sunnyvale");
+        businessCard3 = new BusinessCardVO(3,"choi sangjin", "010-1111-4444", "samsung");
         businessCardList.add(businessCard1);
         businessCardList.add(businessCard2);
         businessCardList.add(businessCard3);
 
         businessCardData = new BusinessCardDAO();
-        businessCardData.setCardList(businessCardList);
+        businessCardData.setBusinessCardList(businessCardList);
         businessCardData.setNum(100);
     }
     @Test

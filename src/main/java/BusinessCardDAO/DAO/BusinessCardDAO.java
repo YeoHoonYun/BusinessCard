@@ -1,8 +1,9 @@
 package BusinessCardDAO.DAO;
 
-import BusinessCardDAO.VO.BusinnessCardVO;
-import ExampleBusinessCard.BusinessCardData;
+import BusinessCardDAO.VO.BusinessCardVO;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
 
@@ -13,9 +14,25 @@ import java.util.*;
  * Created by cjswo9207u@gmail.com on 2018-12-17
  * Github : https://github.com/YeoHoonYun
  */
+@JsonIgnoreProperties(value={"hibernateLazyInitializer", "handler"})
 public class BusinessCardDAO {
-    private int num = 0;
-    private List<BusinnessCardVO> cardList;
+    private int num;
+    private int maxNum;
+    private List<BusinessCardVO> businessCardList;
+
+    public BusinessCardDAO() {
+        businessCardList = new ArrayList<>();
+        this.setBusinessCardList(businessCardList);
+        this.setMaxNum(100);
+    }
+
+    public int getMaxNum() {
+        return maxNum;
+    }
+
+    public void setMaxNum(int maxNum) {
+        this.maxNum = maxNum;
+    }
 
     public int getNum() {
         return num;
@@ -25,42 +42,27 @@ public class BusinessCardDAO {
         this.num = num;
     }
 
-    public List<BusinnessCardVO> getCardList() {
-        return cardList;
+    public List<BusinessCardVO> getBusinessCardList() {
+        return businessCardList;
     }
 
-    public void setCardList(List<BusinnessCardVO> cardList) {
-        this.cardList = cardList;
+    public void setBusinessCardList(List<BusinessCardVO> businessCardList) {
+        this.businessCardList = businessCardList;
     }
 
-    public BusinessCardDAO() {
-        cardList = new ArrayList<>();
-
-//        this.num = this.num + 1;
-//        BusinnessCardVO businnessCardVO1 = new BusinnessCardVO(this.num,"yun","010-2277-9207","Fast");
-//        this.num = this.num + 1;
-//        BusinnessCardVO businnessCardVO2 = new BusinnessCardVO(this.num,"kim","010-1234-5678","Campus");
-//        this.num = this.num + 1;
-//        BusinnessCardVO businnessCardVO3 = new BusinnessCardVO(this.num,"hong","010-9876-0543","Java");
-//
-//        cardList.add(businnessCardVO1);
-//        cardList.add(businnessCardVO2);
-//        cardList.add(businnessCardVO3);
-    }
-
-    public BusinessCardDAO(List<BusinnessCardVO> businnessCardVOList) {
-        cardList = businnessCardVOList;
+    public BusinessCardDAO(List<BusinessCardVO> businessCardVOList) {
+        businessCardList = businessCardVOList;
     }
 
     // 삽입
     public void addCard(String name, String phonNum, String company){
         this.num = this.num + 1;
-        BusinnessCardVO businnessCardVO = new BusinnessCardVO(this.num, name, phonNum, company);
-        cardList.add(businnessCardVO);
+        BusinessCardVO businessCardVO = new BusinessCardVO(this.num, name, phonNum, company);
+        businessCardList.add(businessCardVO);
     }
     // 삭제
     public void deleteCard(int id, String name){
-        Iterator<BusinnessCardVO> iterator = this.cardList.iterator();
+        Iterator<BusinessCardVO> iterator = this.businessCardList.iterator();
         while(iterator.hasNext()){
             if (iterator.next().getName().equals(name)) {
                 iterator.remove();
@@ -69,7 +71,7 @@ public class BusinessCardDAO {
     }
     // 수정(이름만 일단)
     public void modifyCard(int id, String name){
-        for(BusinnessCardVO bc : this.cardList){
+        for(BusinessCardVO bc : this.businessCardList){
             if(bc.getCardNum() == id){
                 bc.setName(name);
             }
@@ -77,8 +79,8 @@ public class BusinessCardDAO {
     }
 
     // 조회
-    public Iterator<BusinnessCardVO> selectCard(){
-        Iterator<BusinnessCardVO> iterator = this.cardList.iterator();
+    public Iterator<BusinessCardVO> selectCard(){
+        Iterator<BusinessCardVO> iterator = this.businessCardList.iterator();
         System.out.println("--------------CardList----------------");
         while(iterator.hasNext()){
             System.out.println(iterator.next().toString());
@@ -91,14 +93,16 @@ public class BusinessCardDAO {
     public void writeFile(String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path);
-        objectMapper.writeValue(file, cardList);
+
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        objectMapper.writeValue(file, this);
     }
 
     @Override
     public String toString() {
         return "BusinessCardDAO{" +
                 "num=" + num +
-                ", cardList=" + cardList +
+                ", businessCardList=" + businessCardList +
                 '}';
     }
 
@@ -106,7 +110,9 @@ public class BusinessCardDAO {
     public void readFile(String path) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(path);
-        BusinessCardData businessCardData = objectMapper.readValue(file, BusinessCardData.class);
-        System.out.println(businessCardData);
+        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        BusinessCardDAO businessCardData = objectMapper.readValue(file, BusinessCardDAO.class);
+        this.businessCardList = businessCardData.getBusinessCardList();
+        this.setNum(businessCardData.getNum()-1);
     }
 }
