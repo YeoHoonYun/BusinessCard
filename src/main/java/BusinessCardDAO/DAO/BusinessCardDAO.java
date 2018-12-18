@@ -2,7 +2,6 @@ package BusinessCardDAO.DAO;
 
 import BusinessCardDAO.VO.BusinessCardDTO;
 import BusinessCardDAO.VO.BusinessCardVO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.io.*;
@@ -45,11 +44,27 @@ public class BusinessCardDAO {
             }
         }
     }
-    // 수정(이름만 일단)
-    public void modifyCard(int id, String name){
+    // 수정(이름)
+    public void modifyName(int id, String name){
         for(BusinessCardVO bc : businessCardDTO.getBusinessCardList()){
             if(bc.getCardNum() == id){
                 bc.setName(name);
+            }
+        }
+    }
+    // 수정(전화번호)
+    public void modifyPhonNum(int id, String name){
+        for(BusinessCardVO bc : businessCardDTO.getBusinessCardList()){
+            if(bc.getCardNum() == id){
+                bc.setPhonNum(name);
+            }
+        }
+    }
+    // 수정(회사)
+    public void modifyCompany(int id, String name){
+        for(BusinessCardVO bc : businessCardDTO.getBusinessCardList()){
+            if(bc.getCardNum() == id){
+                bc.setCompany(name);
             }
         }
     }
@@ -57,11 +72,6 @@ public class BusinessCardDAO {
     // 조회
     public Iterator<BusinessCardVO> selectCard(){
         Iterator<BusinessCardVO> iterator = businessCardDTO.getBusinessCardList().iterator();
-        System.out.println("--------------CardList----------------");
-        while(iterator.hasNext()){
-            System.out.println(iterator.next().toString());
-        }
-        System.out.println("-------------------------------------");
         return iterator;
     }
 
