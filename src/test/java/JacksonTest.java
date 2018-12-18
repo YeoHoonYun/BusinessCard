@@ -1,4 +1,5 @@
 import BusinessCardDAO.DAO.BusinessCardDAO;
+import BusinessCardDAO.VO.BusinessCardDTO;
 import BusinessCardDAO.VO.BusinessCardVO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -14,6 +15,7 @@ public class JacksonTest {
     private BusinessCardVO businessCard2;
     private BusinessCardVO businessCard3;
     private List<BusinessCardVO> businessCardList;
+    private BusinessCardDTO businessCardDTO;
     private BusinessCardDAO businessCardData;
 
     @Before
@@ -26,9 +28,9 @@ public class JacksonTest {
         businessCardList.add(businessCard2);
         businessCardList.add(businessCard3);
 
-        businessCardData = new BusinessCardDAO();
-        businessCardData.setBusinessCardList(businessCardList);
-        businessCardData.setNum(100);
+        businessCardDTO = new BusinessCardDTO();
+        businessCardDTO.setBusinessCardList(businessCardList);
+        businessCardDTO.setNum(100);
     }
     @Test
     public void convertJson() throws Exception{
@@ -55,14 +57,14 @@ public class JacksonTest {
     public void saveBusinessCardData() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(".\\businesscard2.json");
-        objectMapper.writeValue(file, businessCardData);
+        objectMapper.writeValue(file, businessCardDTO);
     }
 
     @Test
     public void readBusinessCardData() throws Exception{
         ObjectMapper objectMapper = new ObjectMapper();
         File file = new File(".\\businesscard2.json");
-        BusinessCardDAO businessCardData = objectMapper.readValue(file, BusinessCardDAO.class);
+        BusinessCardDTO businessCardData = objectMapper.readValue(file, BusinessCardDTO.class);
 
         System.out.println(businessCardData);
     }
