@@ -6,8 +6,6 @@ import BusinessCardDAO.VO.BusinessCardVO;
 import org.apache.commons.collections4.ListUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -157,9 +155,6 @@ public class BusinessCardUI {
                      break;
                  } else {
                      System.out.println("잘못된 값을 입력하였습니다.");
-                     System.out.println("입력을 종료합니다.");
-                     bo = false;
-                     break;
                  }
              }while (true);
         }
