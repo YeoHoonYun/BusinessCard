@@ -20,13 +20,14 @@ public class BusinessCardUI {
     BusinessCardDTO businessCardDTO;
     BusinessCardDAO businessCardDAO;
     String url;
-    int maxNum = 5;
+    int maxNum;
 
     public BusinessCardUI(String url) {
         scanner = new Scanner(System.in);
         businessCardDTO = new BusinessCardDTO();
         businessCardDAO = new BusinessCardDAO(businessCardDTO);
         this.url = ".\\BusinessCardDAO.json";
+        maxNum = 5;
     }
 
     public int getMaxNum() {
