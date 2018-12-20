@@ -37,13 +37,36 @@ public class BusinessCardDAO {
     }
     // 삭제
     public void deleteCard(int id){
+        int delNum = 0;
         Iterator<BusinessCardVO> iterator = businessCardDTO.getBusinessCardList().iterator();
         while(iterator.hasNext()){
             if (iterator.next().getCardNum().equals(id)) {
                 iterator.remove();
+                delNum++;
             }
         }
+        if(delNum == 0){
+            System.out.println("****검색된 값이 없어 삭제 되지 않았습니다.****");
+        }
+        else{
+            System.out.println("****"+delNum + "건의 값을 삭제 하였습니다."+"****");
+        }
+
     }
+
+    // 삭제
+    public void deleteCard(String id){
+        int delNum = 0;
+        Iterator<BusinessCardVO> iterator = businessCardDTO.getBusinessCardList().iterator();
+        while(iterator.hasNext()){
+            if (iterator.next().getName().equals(id)) {
+                iterator.remove();
+                delNum++;
+            }
+        }
+        System.out.println("****"+delNum + "건의 값을 삭제 하였습니다."+"****");
+    }
+
     // 수정(이름)
     public void modifyName(int id, String name){
         for(BusinessCardVO bc : businessCardDTO.getBusinessCardList()){
@@ -69,10 +92,23 @@ public class BusinessCardDAO {
         }
     }
 
-    // 조회
-    public Iterator<BusinessCardVO> selectCard(){
-        Iterator<BusinessCardVO> iterator = businessCardDTO.getBusinessCardList().iterator();
-        return iterator;
+    // 전체 조회
+    public List<BusinessCardVO> selectCard(){
+//        Iterator<BusinessCardVO> iterator = businessCardDTO.getBusinessCardList().iterator();
+        System.out.println("모든 건수 : "+ businessCardDTO.BusinessCardListNum() + "건");
+        return businessCardDTO.getBusinessCardList();
+    }
+
+    // 이름 검색
+    public List<BusinessCardVO> selectCard(String name){
+        List<BusinessCardVO> businessCardVOList = new ArrayList<>();
+        for (BusinessCardVO businessCardVO : businessCardDTO.getBusinessCardList()){
+            if(businessCardVO.getName().contains(name)){
+                businessCardVOList.add(businessCardVO);
+            }
+        }
+        System.out.println("검색 된 모든 건수 : "+ businessCardVOList.size() + "건");
+        return businessCardVOList;
     }
 
     //파일 저장

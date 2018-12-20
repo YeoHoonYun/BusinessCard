@@ -11,7 +11,8 @@ public class BusinessCardExam {
     public static void main(String[] args) throws IOException {
         String url = ".\\BusinessCardDAO.json";
         BusinessCardUI businessCardUI = new BusinessCardUI(url);
-        System.out.println(url);
+        businessCardUI.setMaxNum(3);
+//        System.out.println(url);
         businessCardUI.selectMenu();
     }
 }

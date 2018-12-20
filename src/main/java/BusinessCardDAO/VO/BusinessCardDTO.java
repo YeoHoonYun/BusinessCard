@@ -45,4 +45,8 @@ public class BusinessCardDTO {
         this.businessCardList = businessCardList;
     }
 
+    public int BusinessCardListNum(){
+        return this.getBusinessCardList().size();
+    }
+
 }

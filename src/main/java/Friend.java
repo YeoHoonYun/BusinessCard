@@ -11,6 +11,10 @@ public class Friend {
         this.num = num;
     }
 
+    public Friend(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }

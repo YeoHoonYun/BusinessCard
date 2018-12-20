@@ -21,29 +21,37 @@ public class FriendManager {
         this.friendList = friendList;
     }
 
+    // 친구 추가
     public void addFriend(Friend friend){
         friendList.add(friend);
     }
 
+    // 친구 검색
     public List<Friend> reFriend(String name){
         List<Friend> returnList = new ArrayList<>();
         for (Friend f : this.friendList){
-            if (f.getName().equals(name)){
+            if (f.getName().contains(name)){
                 returnList.add(f);
             }
         }
         return returnList;
     }
 
-    public void delFriend(String num){
+    // 친구 삭제
+    public int delFriend(String num){
+        // for문을 사용하면 기존의 데이터의 길이가 줄어 들기 때문에 아웃 오브 바운드가 발생하기 때문에 Iterator로 바꿔서 작성해준다.
         Iterator<Friend> iterator = friendList.iterator();
+        int deleteNum = 0;
         while(iterator.hasNext()){
             if(iterator.next().getNum().equals(num)){
+                deleteNum++;
                 iterator.remove();
             }
         }
+        return deleteNum;
     }
 
+    // 친구 수
     public int friendSize(){
         return friendList.size();
     }
